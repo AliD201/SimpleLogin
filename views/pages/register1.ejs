@@ -40,20 +40,19 @@
 
       <main>
         <div class="text-center p-4">
-          <h1 class="mb-4 login">Register</h1>
+          <h1  class="mb-4 login">Register</h1>
 
           <div>
             <div class="d-inline-block  dots-at"></div>
             <div class="d-inline-block  dots-next"></div>
           </div>
 
-          <div class="registration-header">
+          <div id='register-header' class="registration-header">
             <div class="">
               <div class="text-left tag">User Info</div>
               <div class="line mb-4"></div>
             </div>
           </div>
-
         <div 
         class="d-flex justify-content-center align-self-center "
         >
@@ -61,7 +60,7 @@
             
           
           
-          <form id="registration-form">
+          <form id="registration-form" onsubmit="register1(event)" >
             <div class="row">
               <div class="col-sm-12" style="margin-left: 11.8%;">
                 <p style="color: red;">Invalid Melon</p>
@@ -69,7 +68,7 @@
             </div>
             <div class="form-group row">
               <label
-                for="colFormLabelLg"
+                for="username"
                 class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
                 >Username</label
               >
@@ -78,7 +77,7 @@
                 <input
                   type="text"
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="username"
                   placeholder="Abdulasammad"
                   required
                 />
@@ -86,31 +85,31 @@
             </div>
             <div class="row">
                <div class="col-sm-12" style="margin-left: 11.8%;">
-                <p style="color: red;">Invalid Melon</p>
+                <p id='pass1' style="color: red; display: none;">Passwords doesn't Match</p>
               </div>
             </div>
 
             <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+                <label for="password1" class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
                   <!-- <p style="color: red;">Invalid Melon</p> -->
 
-                  <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword3" placeholder="Password"
+                  <input type="password" minlength="8" class="form-control round-corners passwordfield" id="password1" placeholder="Password"
                   required>
                 </div>
             </div>
             <div class="row">
                <div class="col-sm-12" style="margin-left: 11.8%;">
-                <p style="color: red;">Invalid Melon</p>
+                <p id='pass2' style="color: red; display: none;" >Passwords doesn't Match</p>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="inputPassword4" class="col-sm-3 col-form-label">Confirm Password</label>
+              <label for="password2" class="col-sm-3 col-form-label">Confirm Password</label>
               <div class="col-sm-9">
                 <!-- <p style="color: red;">Invalid Melon</p> -->
 
-                <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword4" placeholder="Confirm Password"
+                <input type="password" minlength="8" class="form-control round-corners passwordfield" id="password2" placeholder="Confirm Password"
                 required>
               </div>
             </div>
@@ -120,11 +119,11 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg ">Email</label>
+              <label for="email" class="col-sm-3 col-form-label col-form-label-lg ">Email</label>
               <div class="col-sm-9">
                 <!-- <p style="color: red;">Invalid Melon</p> -->
 
-                <input type="email" class="form-control form-control-lg round-corners" id="colFormLabelLg" placeholder="example@hotmail.com"
+                <input type="email" class="form-control form-control-lg round-corners" id="email" placeholder="example@hotmail.com"
                 required>
               </div>
             </div>
@@ -135,7 +134,7 @@
             </div>
             <div class="form-group row ">
               <label
-                for="colFormLabelLg"
+                for="dob"
                 class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
                 >Date of birth</label
               >
@@ -146,7 +145,7 @@
                   minlength="19"
                   maxlength="19"
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="dob"
                   placeholder="example@hotmail.com"
                   required
                   />
@@ -159,7 +158,7 @@
             </div>
             <div class="form-group row">
               <label
-                for="colFormLabelLg"
+                for="mobileNumber"
                 class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
                 >Mobile Number</label
               >
@@ -167,7 +166,7 @@
                 <!-- <p style="color: red;">Invalid Melon</p> -->
                 <input
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="mobileNumber"
                   placeholder="+966532165498"
                   type="text" pattern="(\+)(\d*)" minlength="13" maxlength="13"
                   required
@@ -188,17 +187,17 @@
           <p>
             <strong>Password Policy </strong>
             <br>
-            - Must be 8 Characters         at least.
+            <span id="char8">- Must be 8 Characters         at least.</span>
             <br>
-            - Must have at least one       capital letter and one small letter.
+            <span id="cap-small">- Must have at least one       capital letter and one small letter.</span>
             <br>
-            - Must have a symbol.
+            <span id="symbols">- Must have a symbol.</span>
             <br>
-            - Must have numbers.
+            <span id="number">- Must have at least one number.</span>
           </p>
         </div>
         </div>
-        <button type="submit" class="btn btn-primary app-button mt-4" form="registration-form" >
+        <button  class="btn btn-primary app-button mt-4" form="registration-form" >
           Continue Registeration
         </button>
       </main>
@@ -211,4 +210,95 @@
     </div>
   </div>
   </body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>
+function hasLowerCase(str) {
+    return str.toUpperCase() != str;
+}
+function hasUpperCase(str) {
+    return str.toLowerCase() != str;
+}
+     $('#password1, #password2').on('change', function() {
+      var password1 = $("#password1").val();
+      var password2 = $("#password2").val();
+      if ( password1 !=password2){
+          $('#pass1').show()
+          $('#pass2').show()
+        }else{
+          $('#pass1').hide()
+          $('#pass2').hide()
+        }
+        console.log(typeof(password1))
+      if (password1.length < 8 && password2.length < 8){        
+        $('#char8').css({ 'color': 'red' });
+      }else{
+        $('#char8').css({ 'color': 'black' });
+      }
+      if (hasLowerCase(password1) && hasUpperCase(password1) && hasLowerCase(password2) && hasUpperCase(password2)  ){
+        $('#cap-small').css({ 'color': 'black' });
+      }else{
+        $('#cap-small').css({ 'color': 'red' });
+      }
+      var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      if ( format.test(password1) && format.test(password2)){
+        $('#symbols').css({ 'color': 'black' });
+      }else{
+        $('#symbols').css({ 'color': 'red' });
+      }
+      var format2 = /[0-9]/;
+      if ( format2.test(password1) && format2.test(password2)){
+        $('#number').css({ 'color': 'black' });
+      }else{
+        $('#number').css({ 'color': 'red' });
+      }
+  // Does some stuff and logs the event to the console
+});
+      function register1(event) {
+        // alert("The form was submitted");
+        var mobile = $("#mobileNumber").val();
+        var password1 = $("#password1").val();
+        var password2 = $("#password2").val();
+        var dob = $("#dob").val();
+        var username = $('#username').val();
+        var email = $('#email').val();
+        alert(`The form was submitted \n ${ email } \n ${ password1 } \n ${username}`)
+
+        if ( password1 !=password2){
+          // return ;
+        }
+
+        fetch(`http://${window.location.hostname}:8002/register1`, {
+          method: 'post',
+          headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+          body: JSON.stringify({
+        email: email,
+        password: password1,
+        dob,
+        username,
+        mobile
+        })
+        }).then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          if (data.status === 'success'){
+            $('#error').remove()
+          window.location = data.link
+        } else {
+          if ($('#error').length){
+            $('#error').text(data.status)
+          }else {
+            $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#register-header')
+          }
+        }
+        });
+        alert(`The form was submitted \n ${ email } \n ${ password1 }`);
+        
+        event.preventDefault();
+  }
+        
+
+      </script>
 </html>

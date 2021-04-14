@@ -1,67 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>EJS Is Fun</title>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>EJS Is Fun</title>
 
-    <!-- CSS (load bootstrap from a CDN) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css"">
+      <!-- CSS (load bootstrap from a CDN) -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="style.css"">
 
-    <style>
-      body {
-        padding-top: 50px;
-      }
-    </style>
-  </head>
-  <body >
-    <div class='white-head'></div>
-    <div class="container" >
-    <header>
-    <%- include('../partials/header'); %>
-          <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">EJS Is Fun</a>
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-          </li>
-        </ul>
-      </nav> -->
-    </header>
+      <style>
+        body {
+          padding-top: 50px;
+        }
+      </style>
+    </head>
+    <body >
+      <div class='white-head'></div>
+      <div class="container" >
+      <header>
+      <%- include('../partials/header'); %>
+            <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">EJS Is Fun</a>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+          </ul>
+        </nav> -->
+      </header>
 
-    <main>
-      <div class="jumbotron  text-center">
-        <h1 class="mb-4 login "">LOGIN</h1>
-        <p style="color: red;">Invalid Melon</p>
-        <form>
-            <div class="form-group row">
-                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg ">Email</label>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control form-control-lg round-corners" id="colFormLabelLg" placeholder="example@hotmail.com">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
-                  <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword3" placeholder="Password">
-                </div>
+      <main>
+        <div class="jumbotron  text-center">
+          <h1 id="login-Header" class="mb-4 login "">LOGIN</h1>
+          <form onsubmit="login(event)">
+              <div class="form-group row">
+                  <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg ">Email</label>
+                  <div class="col-sm-10">
+                    <input id="email" type="email" class="form-control form-control-lg round-corners" id="colFormLabelLg" placeholder="example@hotmail.com" required>
+                  </div>
               </div>
-              <p>not Registered?  <a href="register"> Sign Up </a> now !</p>
-            <div class="form-group row">
-                <div class="col-sm">
-                  <button type="submit" class="btn btn-primary app-button">Sign in</button>
+              <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                  <div class="col-sm-10">
+                    <input id="password" type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword3" placeholder="Password" required>
+                  </div>
                 </div>
-            </div>
-          </form>
-      </div>
-    </main>
+                <p>not Registered?  <a href="register"> Sign Up </a> now !</p>
+              <div class="form-group row">
+                  <div class="col-sm">
+                    <button type="submit" class="btn btn-primary app-button">Sign in</button>
+                  </div>
+              </div>
+            </form>
+        </div>
+      </main>
 
-    <footer>
-      <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
-    </footer>
-  </div>
-  </body>
-</html>
+      <footer>
+        <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
+      </footer>
+    </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>
+      function login(event) {
+        // alert("The form was submitted");
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var test = window.location.hostname;
+        console.log(`The form was submitted \n ${ email } \n ${ password } \n ${test}`)
+        fetch(`http://${window.location.hostname}:8002/login`, {
+          method: 'post',
+          headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+          body: JSON.stringify({
+        email: email,
+        password: password
+        })
+        }).then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          if (data.status === 'success'){
+            $('#error').remove()
+          window.location = data.link
+        } else {
+          
+          if ($('#error').length){
+            $('#error').text(data.status)
+          }else {
+            $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#login-Header')
+          }
+        }
+        });
+        alert(`The form was submitted \n ${ email } \n ${ password }`);
+        
+        event.preventDefault();
+  }
+        
+
+      </script>
+  </html>

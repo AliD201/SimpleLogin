@@ -46,28 +46,32 @@
               <div class="d-inline-block  dots-done"></div>
               <div class="d-inline-block  dots-at"></div>
             </div>
-            <div class="registration-header">
+            <div id="register-header" class="registration-header">
               <div class="">
                 <div class="text-left tag">Card Info</div>
                 <div class="line mb-4"></div>
               </div>
             </div>
             <div class="d-flex justify-content-center">
-          <form>
+          <form onsubmit="register2(event)">
             <div class="form-group row">
               <label
-                for="colFormLabelLg"
+                for="cardNumber"
                 class="col-sm-2 col-form-label col-form-label-lg pr-1 pl-2"
                 >Card Number</label
               >
               <div class="col-sm-10">
                 <input
-                  type="number"
+                  type="text"
                   mmin="1000000000000000000"
                   max="9999999999999999999"
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="cardNumber"
                   placeholder="123456789123456789"
+                  maxlength="19"
+                  minlength="19"
+                  pattern="(\d*)"
+                  required
                 />
               </div>
               <div class="col-sm-12">
@@ -81,7 +85,7 @@
 
             <div class="form-group row mb-0">
               <label
-                for="colFormLabelLg"
+                for="doe"
                 class="col-sm-2 col-form-label col-form-label-lg pr-1 pl-2"
                 >Date of expiration</label
               >
@@ -91,31 +95,36 @@
                   minlength="19"
                   maxlength="19"
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="doe"
                   placeholder="example@hotmail.com"
+                  required
                 />
               </div>
             </div>
             <div class="form-group row">
               <label
-                for="colFormLabelLg"
+                for="cvv"
                 class="col-sm-2 col-form-label col-form-label-lg pr-1 pl-2"
                 >CVV</label
               >
               <div class="col-sm-10">
                 <input
-                  type="number"
+                  type="text"
                   max="999"
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="cvv"
                   placeholder="123"
+                  maxlength="3"
+                  minlength="3"
+                  pattern="(\d*)"
+                  required
                 />
                 
               </div>
             </div>
             <div class="form-group row">
               <label
-                for="colFormLabelLg"
+                for="name"
                 class="col-sm-2 col-form-label col-form-label-lg pr-1 pl-2"
                 >Name on the Card</label
               >
@@ -123,8 +132,9 @@
                 <input
                   type="text"
                   class="form-control form-control-lg round-corners"
-                  id="colFormLabelLg"
+                  id="name"
                   placeholder="عبد الصمد ثلاجة"
+                  required
                 />
               </div>
             </div>
@@ -148,4 +158,50 @@
       </footer>
     </div>
   </body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <script>
+          function register2(event) {
+            // alert("The form was submitted");
+            var cardNumber = $("#cardNumber").val();
+            var doe = $("#doe").val();
+            var cvv = $("#cvv").val();
+            var name = $("#name").val();
+            alert(`The form was submitted \n ${ cardNumber } \n ${ doe } \n ${cvv}`)
+    
+
+    
+            fetch(`http://${window.location.hostname}:8002/register2`, {
+              method: 'post',
+              headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+              body: JSON.stringify({
+                cardNumber,
+                doe,
+                cvv,
+                name,
+            })
+            }).then(function(response) {
+              return response.json();
+            }).then(function(data) {
+              if (data.status === 'success'){
+                $('#error').remove()
+              window.location = data.link
+            } else {
+              if ($('#error').length){
+                $('#error').text(data.status)
+              }else {
+                $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#register-header')
+              }
+            }
+            });
+            // alert(`The form was submitted \n ${ email } \n ${ password1 }`);
+            
+            event.preventDefault();
+      }
+            
+    
+          </script>
 </html>
