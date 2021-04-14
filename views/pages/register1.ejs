@@ -17,6 +17,18 @@
       body {
         padding-top: 50px;
       }
+      div.form-group.row input{
+  /* margin-left: 60px; */
+width: 93%;
+
+}
+div.form-group.row{
+  margin-left: 120px;
+}
+div.form-group.row label{
+
+  /* padding-left: 100px; */
+}
     </style>
   </head>
   <body>
@@ -62,17 +74,17 @@
           
           <form id="registration-form" onsubmit="register1(event)" >
             <div class="row">
-              <div class="col-sm-12" style="margin-left: 11.8%;">
+              <div class="col-lg-12" style="margin-left: 30.8%;">
                 <p style="color: red;">Invalid Melon</p>
               </div>
             </div>
             <div class="form-group row">
               <label
                 for="username"
-                class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
+                class=" col-lg-3 col-form-label col-form-label-lg  "
                 >Username</label
               >
-              <div class="col-sm-9">
+              <div class="col-lg-9">
 
                 <input
                   type="text"
@@ -84,14 +96,14 @@
               </div>
             </div>
             <div class="row">
-               <div class="col-sm-12" style="margin-left: 11.8%;">
+               <div class="col-lg-12" style="margin-left: 30.8%;">
                 <p id='pass1' style="color: red; display: none;">Passwords doesn't Match</p>
               </div>
             </div>
 
             <div class="form-group row">
-                <label for="password1" class="col-sm-3 col-form-label">Password</label>
-                <div class="col-sm-9">
+                <label for="password1" class="col-lg-3 col-form-label col-form-label-lg">Password</label>
+                <div class="col-lg-9">
                   <!-- <p style="color: red;">Invalid Melon</p> -->
 
                   <input type="password" minlength="8" class="form-control round-corners passwordfield" id="password1" placeholder="Password"
@@ -99,14 +111,14 @@
                 </div>
             </div>
             <div class="row">
-               <div class="col-sm-12" style="margin-left: 11.8%;">
+               <div class="col-lg-12" style="margin-left: 30.8%;">
                 <p id='pass2' style="color: red; display: none;" >Passwords doesn't Match</p>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="password2" class="col-sm-3 col-form-label">Confirm Password</label>
-              <div class="col-sm-9">
+              <label for="password2" class="col-lg-3 col-form-label col-form-label-lg">Confirm Password</label>
+              <div class="col-lg-9">
                 <!-- <p style="color: red;">Invalid Melon</p> -->
 
                 <input type="password" minlength="8" class="form-control round-corners passwordfield" id="password2" placeholder="Confirm Password"
@@ -114,13 +126,13 @@
               </div>
             </div>
             <div class="row">
-               <div class="col-sm-12" style="margin-left: 11.8%;">
+               <div class="col-lg-12" style="margin-left: 30.8%;">
                 <p style="color: red;">Invalid Melon</p>
               </div>
             </div>
             <div class="form-group row">
-              <label for="email" class="col-sm-3 col-form-label col-form-label-lg ">Email</label>
-              <div class="col-sm-9">
+              <label for="email" class="col-lg-3 col-form-label col-form-label-lg ">Email</label>
+              <div class="col-lg-9">
                 <!-- <p style="color: red;">Invalid Melon</p> -->
 
                 <input type="email" class="form-control form-control-lg round-corners" id="email" placeholder="example@hotmail.com"
@@ -128,17 +140,17 @@
               </div>
             </div>
             <div class="row">
-               <div class="col-sm-12" style="margin-left: 11.8%;">
+               <div class="col-lg-12" style="margin-left: 30.8%;">
                 <p style="color: red;">Invalid Melon</p>
               </div>
             </div>
             <div class="form-group row ">
               <label
                 for="dob"
-                class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
+                class="col-lg-3 col-form-label col-form-label-lg pr-1 "
                 >Date of birth</label
               >
-              <div class="col-sm-9">
+              <div class="col-lg-9">
                 <!-- <p style="color: red;">Invalid Melon</p> -->
                 <input
                   type="date"
@@ -147,27 +159,29 @@
                   class="form-control form-control-lg round-corners"
                   id="dob"
                   placeholder="example@hotmail.com"
+                  min="1921-01-01"
+                  
                   required
                   />
               </div>
             </div>
             <div class="row">
-               <div class="col-sm-12" style="margin-left: 11.8%;">
+               <div class="col-lg-12" style="margin-left: 30.8%;">
                 <p style="color: red;">Invalid Melon</p>
               </div>
             </div>
             <div class="form-group row">
               <label
                 for="mobileNumber"
-                class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
+                class="col-lg-3 col-form-label col-form-label-lg pr-1 "
                 >Mobile Number</label
               >
-              <div class="col-sm-9">
+              <div class="col-lg-9">
                 <!-- <p style="color: red;">Invalid Melon</p> -->
                 <input
                   class="form-control form-control-lg round-corners"
                   id="mobileNumber"
-                  placeholder="+966532165498"
+                  placeholder="+966 XX XXX XXXX"
                   type="text" pattern="(\+)(\d*)" minlength="13" maxlength="13"
                   required
                 />
@@ -212,6 +226,20 @@
   </body>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+yyyy = yyyy-15;
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("dob").setAttribute("max", today);
+
 function hasLowerCase(str) {
     return str.toUpperCase() != str;
 }

@@ -125,8 +125,8 @@ border-radius: 50%;
   }
 
   .password-rec{
-    flex-basis: 30%;
-    margin-left: 4%;
+    flex-basis: 20%;
+    /* margin-left: 4%; */
     height: 50%;
     backdrop-filter: blur(4px);
     padding-top: 4%;
@@ -137,8 +137,20 @@ border-radius: 50%;
   }
   .reg-form{
     flex-basis: 60%;
+    margin-left: 120px;
+    margin-top : 10px;
   }
 .twoAuth input {
 font-size: 40px;
 text-align: center;
 }
+
+.btn-primary:hover {
+  background-color: rgb(8, 183, 98, 58%);
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  background-color: rgb(9 ,146 ,79 ,58%);
+}
+
+
+
