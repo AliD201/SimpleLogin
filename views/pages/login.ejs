@@ -14,9 +14,12 @@
       }
     </style>
   </head>
-  <body class="container">
+  <body >
+    <div class='white-head'></div>
+    <div class="container" >
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <%- include('../partials/header'); %>
+          <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">EJS Is Fun</a>
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
@@ -26,28 +29,30 @@
             <a class="nav-link" href="/about">About</a>
           </li>
         </ul>
-      </nav>
+      </nav> -->
     </header>
 
     <main>
-      <div class="jumbotron text-center">
-        <h1 class="">Login Page</h1>
+      <div class="jumbotron  text-center">
+        <h1 class="mb-4 login "">LOGIN</h1>
+        <p style="color: red;">Invalid Melon</p>
         <form>
             <div class="form-group row">
-                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
+                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg ">Email</label>
                 <div class="col-sm-10">
-                  <input type="email" class="form-control form-control-lg" id="colFormLabelLg" placeholder="col-form-label-lg">
+                  <input type="email" class="form-control form-control-lg round-corners" id="colFormLabelLg" placeholder="example@hotmail.com">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
-                  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                  <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword3" placeholder="Password">
                 </div>
               </div>
+              <p>not Registered?  <a href="register"> Sign Up </a> now !</p>
             <div class="form-group row">
                 <div class="col-sm">
-                  <button type="submit" class="btn btn-primary">Sign in</button>
+                  <button type="submit" class="btn btn-primary app-button">Sign in</button>
                 </div>
             </div>
           </form>
@@ -55,8 +60,8 @@
     </main>
 
     <footer>
-      <p class="text-center text-muted">© Copyright 2020 The Awesome People</p>
-      <!-- <%- include('../partials/footer'); %> -->
+      <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
     </footer>
+  </div>
   </body>
 </html>

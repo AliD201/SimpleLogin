@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EJS Is Fun</title>
+
+    <!-- CSS (load bootstrap from a CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css"">
+
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="white-head"></div>
+    <div class="container" style="max-width: 100%;">
+      
+      <header>
+        <%- include('../partials/header'); %>
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">EJS Is Fun</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+        </ul>
+      </nav> -->
+      </header>
+
+      <main>
+        <div class="text-center p-4">
+          <h1 class="mb-4 login">Register</h1>
+
+          <div>
+            <div class="d-inline-block  dots-at"></div>
+            <div class="d-inline-block  dots-next"></div>
+          </div>
+
+          <div class="registration-header">
+            <div class="">
+              <div class="text-left tag">User Info</div>
+              <div class="line mb-4"></div>
+            </div>
+          </div>
+
+        <div 
+        class="d-flex justify-content-center align-self-center "
+        >
+          <div class="reg-form">
+            
+          
+          
+          <form id="registration-form">
+            <div class="row">
+              <div class="col-sm-12" style="margin-left: 11.8%;">
+                <p style="color: red;">Invalid Melon</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                for="colFormLabelLg"
+                class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
+                >Username</label
+              >
+              <div class="col-sm-9">
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg round-corners"
+                  id="colFormLabelLg"
+                  placeholder="Abdulasammad"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-12" style="margin-left: 11.8%;">
+                <p style="color: red;">Invalid Melon</p>
+              </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+                <div class="col-sm-9">
+                  <!-- <p style="color: red;">Invalid Melon</p> -->
+
+                  <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword3" placeholder="Password"
+                  required>
+                </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-12" style="margin-left: 11.8%;">
+                <p style="color: red;">Invalid Melon</p>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="inputPassword4" class="col-sm-3 col-form-label">Confirm Password</label>
+              <div class="col-sm-9">
+                <!-- <p style="color: red;">Invalid Melon</p> -->
+
+                <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword4" placeholder="Confirm Password"
+                required>
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-12" style="margin-left: 11.8%;">
+                <p style="color: red;">Invalid Melon</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg ">Email</label>
+              <div class="col-sm-9">
+                <!-- <p style="color: red;">Invalid Melon</p> -->
+
+                <input type="email" class="form-control form-control-lg round-corners" id="colFormLabelLg" placeholder="example@hotmail.com"
+                required>
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-12" style="margin-left: 11.8%;">
+                <p style="color: red;">Invalid Melon</p>
+              </div>
+            </div>
+            <div class="form-group row ">
+              <label
+                for="colFormLabelLg"
+                class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
+                >Date of birth</label
+              >
+              <div class="col-sm-9">
+                <!-- <p style="color: red;">Invalid Melon</p> -->
+                <input
+                  type="date"
+                  minlength="19"
+                  maxlength="19"
+                  class="form-control form-control-lg round-corners"
+                  id="colFormLabelLg"
+                  placeholder="example@hotmail.com"
+                  required
+                  />
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-12" style="margin-left: 11.8%;">
+                <p style="color: red;">Invalid Melon</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                for="colFormLabelLg"
+                class="col-sm-3 col-form-label col-form-label-lg pr-1 pl-2"
+                >Mobile Number</label
+              >
+              <div class="col-sm-9">
+                <!-- <p style="color: red;">Invalid Melon</p> -->
+                <input
+                  class="form-control form-control-lg round-corners"
+                  id="colFormLabelLg"
+                  placeholder="+966532165498"
+                  type="text" pattern="(\+)(\d*)" minlength="13" maxlength="13"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- <div class="form-group row">
+              <div class="col-sm">
+                <button type="submit" class="btn btn-primary app-button" form="registration-form" >
+                  Confirm Registeration
+                </button>
+              </div>
+            </div> -->
+          </form>
+        </div>
+        <div class="jumbotron password-rec text-center align-self-center"> 
+          <p>
+            <strong>Password Policy </strong>
+            <br>
+            - Must be 8 Characters         at least.
+            <br>
+            - Must have at least one       capital letter and one small letter.
+            <br>
+            - Must have a symbol.
+            <br>
+            - Must have numbers.
+          </p>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-primary app-button mt-4" form="registration-form" >
+          Continue Registeration
+        </button>
+      </main>
+
+      <footer>
+        <p class="text-center text-muted">
+          © Copyright 2021 The Awesome People
+        </p>
+      </footer>
+    </div>
+  </div>
+  </body>
+</html>

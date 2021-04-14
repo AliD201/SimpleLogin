@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EJS Is Fun</title>
+
+    <!-- CSS (load bootstrap from a CDN) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"">
+
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+  </head>
+  <body >
+    <div class='white-head'></div>
+    <div class="container" >
+    <header>
+      <div class="d-flex justify-content-center">
+      <img id="main-logo" class="text-center d-block" src="images/shopping-cart.png" alt="main logo">
+    </div>
+    <h1 class="text-center title">Dhahran E-Shopping</h1>
+    <%- include('partials/header.ejs') %>
+          <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">EJS Is Fun</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+        </ul>
+      </nav> -->
+    </header>
+
+    <main>
+      <div class="jumbotron  text-center">
+        <h1 class="mb-4 login "">LOGIN</h1>
+        <p style="color: red;">Invalid Melon</p>
+        <form>
+            <div class="form-group row">
+                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg ">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control form-control-lg round-corners" id="colFormLabelLg" placeholder="example@hotmail.com">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" minlength="8" class="form-control round-corners passwordfield" id="inputPassword3" placeholder="Password">
+                </div>
+              </div>
+              <p>not Registered?  <a href="register"> Sign Up </a> now !</p>
+            <div class="form-group row">
+                <div class="col-sm">
+                  <button type="submit" class="btn btn-primary app-button">Sign in</button>
+                </div>
+            </div>
+          </form>
+      </div>
+    </main>
+
+    <footer>
+      <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
+    </footer>
+  </div>
+  </body>
+</html>

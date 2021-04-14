@@ -34,17 +34,25 @@ app.use(express.static(path.join(__dirname, "public")));
 //   });
 
 app.get("/", (req, res) => {
-    res.render('pages/index.ejs');
+    res.render('pages/login.ejs');
 });
 app.get("/login", (req, res) => {
-    res.render('pages/index.ejs');
+    res.render('pages/login.ejs');
 });
-app.get("/register", (req, res) => {
-    res.render('pages/index.ejs');
+app.get("/register1", (req, res) => {
+    res.render('pages/register1.ejs');
+});
+app.get("/register2", (req, res) => {
+    res.render('pages/register2.ejs');
 });
 app.get("/2fa/:id:", (req, res) => {
     const {id} = req.params()
     res.render('pages/index.ejs');
+});
+
+app.get("/2fa/test", (req, res) => {
+    // const {id} = req.params()
+    res.render('pages/twoAuth.ejs');
 });
 
 /**
