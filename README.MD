@@ -1,3 +1,5 @@
+A note to me: don't use bootstrap4 alignment and use raw alignment. 
+
 # SimpleLogin
 a small project in SWE545
 
