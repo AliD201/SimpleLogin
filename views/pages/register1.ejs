@@ -183,6 +183,9 @@ div.form-group.row label{
                   id="mobileNumber"
                   placeholder="+966 XX XXX XXXX"
                   type="text" pattern="(\+)(\d*)" minlength="13" maxlength="13"
+                  
+                  oninput="mobileCheck(this.value);"
+
                   required
                 />
               </div>
@@ -226,6 +229,19 @@ div.form-group.row label{
   </body>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>
+
+function mobileCheck(mobileNumb){
+  var validation2 = (mobileNumb[0] == "+");
+  console.log(validation2)
+  var correctNumber = ""
+  if (validation2){
+    var validation1 = mobileNumb.replace(/[^0-9]/g,'');
+    correctNumber = "+" + validation1;
+    $("#mobileNumber").val(correctNumber)
+  }else{
+    $("#mobileNumber").val('')
+  }
+}
 var today = new Date();
 var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
