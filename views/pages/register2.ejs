@@ -70,7 +70,7 @@
                   placeholder="123456789123456789"
                   maxlength="19"
                   minlength="13"
-                  pattern="(\d*)"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                   required
                 />
               </div>
@@ -115,7 +115,7 @@
                   placeholder="123"
                   maxlength="3"
                   minlength="3"
-                  pattern="(\d*)"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                   required
                 />
                 
