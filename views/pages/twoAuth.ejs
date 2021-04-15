@@ -12,6 +12,14 @@
       body {
         padding-top: 50px;
       }
+      input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
     </style>
   </head>
   <body >
@@ -35,9 +43,11 @@
                 style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                "
+                "  
+                  minlength="1"
                   maxlength="1"
-                  pattern="[1-9]"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                  
                   >
                   <input type="text" 
                   class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
@@ -45,8 +55,9 @@
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
                 "
-                  maxlength="1"
-                  pattern="[1-9]"
+                 minlength="1"
+                 maxlength="1"
+                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                   >
                   <input type="text" 
                   class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
@@ -54,8 +65,9 @@
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
                 "
+                  minlength="1"
                   maxlength="1"
-                  pattern="[1-9]"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                   >
                   <input type="text" 
                   class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
@@ -63,8 +75,9 @@
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
                 "
+                  minlength="1"
                   maxlength="1"
-                  pattern="[1-9]"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                   >
                 </div>
                 </div>
