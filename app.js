@@ -4,6 +4,7 @@
  */
 const express = require("express");
 const path = require("path");
+const nodemailer = require('nodemailer');
 
 /**
  * App Variables
@@ -13,6 +14,11 @@ const port = process.env.PORT || "8002";
 
 // this is just an example of 2fa auth
 var twoWayAuth = {
+        auth12345:{
+            id : "12345",
+            verificationNumber: '54321',
+            timestamp: '10-04-2021 01:05:00'
+        },
         auth12345:{
             id : "12345",
             verificationNumber: '54321',
@@ -30,6 +36,35 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
+
+/**
+ * Mailer settings
+ */
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'youremail',
+      pass: 'email_password' // naturally, replace both with your real credentials or an application-specific password
+    }
+  });
+  
+  const mailOptions = {
+    from: 'youremail',
+    to: 'user',
+    subject: 'Authentication code No-Reply',
+    text: 'Dudes, we really need your money. and here is the code \n 1234'
+  };
+  
+//!   this is how to send an email 
+//   transporter.sendMail(mailOptions, function(error, info){
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log('Email sent: ' + info.response);
+//     }
+//   });
+
 
 /**
  * Routes Definitions
