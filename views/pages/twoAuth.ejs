@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>EJS Is Fun</title>
 
     <!-- CSS (load bootstrap from a CDN) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/style.css"">
+    <link rel="stylesheet" href="/style.css" ">
 
     <style>
       body {
@@ -24,83 +25,80 @@ input::-webkit-inner-spin-button {
   </head>
   <body >
     <div class='white-head'></div>
-    <div class="container" >
+    <div class="container " >
     <header>
     <%- include('../partials/header'); %>
 
     </header>
 
     <main>
-      <div class="jumbotron  text-center">
+      <div class="jumbotron text-center ">
         <h1 class="mb-4 login "">A 4 digit verification code has been sent to your Email </h1>
-        <p style="color: red;">Invalid Medlon</p>
-        <form>
-            <div class="form-group row twoAuth">
-                <div class="col-sm-12">
-                    <div class="row justify-content-around">
-                  <input type="text" 
-                  class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
-                style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+    <p style="color: red;">Invalid Medlon</p>
+    <form onsubmit="digits()">
+        <div class="form-group row twoAuth">
+            <div class="col-sm-12">
+                <div class="row justify-content-around">
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg1" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                "  
-                  minlength="1"
-                  maxlength="1"
-                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                  
-                  >
-                  <input type="text" 
-                  class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
-                style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg2" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                "
-                 minlength="1"
-                 maxlength="1"
-                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                  >
-                  <input type="text" 
-                  class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
-                style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg2" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                "
-                  minlength="1"
-                  maxlength="1"
-                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                  >
-                  <input type="text" 
-                  class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg" 
-                style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg3" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                "
-                  minlength="1"
-                  maxlength="1"
-                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                  >
-                </div>
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                 </div>
             </div>
-            <p>
-                If you don’t find the message in your inbox, please check the junk mail inbox. 
-            </p>
-            <p style="color: red;">
-                Resend Code
-            </p>
-            <div class="form-group row">
-                <div class="col-sm">
-                  <button type="submit" class="btn btn-primary app-button" >Submit</button>
-                </div>
+        </div>
+        <p>
+            If you don’t find the message in your inbox, please check the junk mail inbox.
+        </p>
+        <p style="color: red;">
+            Resend Code
+        </p>
+        <div class="form-group row">
+            <div class="col-sm">
+                <button type="submit" class="btn btn-primary app-button">Submit</button>
             </div>
-          </form>
-      </div>
+        </div>
+    </form>
+    </div>
     </main>
 
     <footer>
-      <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
+        <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
     </footer>
-  </div>
-  </body>
-</html>
+    </div>
 
+    </body>
+    <script>
+        function digits() {
+            var d1 = $("#colFormLabelLg1").val();
+            var d2 = $("#colFormLabelLg2").val();
+            var d3 = $("#colFormLabelLg3").val();
+            var d4 = $("#colFormLabelLg4").val();
+            var digits = d1 + '' + d2 + '' + d3 + '' + d4;
+
+            fetch(`http://${window.location.hostname}:8002/2fa/id`, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }, {
+                body: JSON.stringify({
+                    digits: digits
+                })
+            });
+        };
+    </script>
+
+</html>
