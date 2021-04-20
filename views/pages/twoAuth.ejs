@@ -35,26 +35,26 @@ input::-webkit-inner-spin-button {
       <div class="jumbotron text-center ">
         <h1 class="mb-4 login "">A 4 digit verification code has been sent to your Email </h1>
     <p style="color: red;">Invalid Medlon</p>
-    <form onsubmit="digits()">
+    <form onsubmit="digits(event)">
         <div class="form-group row twoAuth">
             <div class="col-sm-12">
                 <div class="row justify-content-around">
                     <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg1" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
                     <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg2" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
-                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg2" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
-                outline: none;
-                border-bottom: 2px solid lightgrey; 
-                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
                     <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg3" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
                 outline: none;
                 border-bottom: 2px solid lightgrey; 
-                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg4" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                outline: none;
+                border-bottom: 2px solid lightgrey; 
+                " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@ input::-webkit-inner-spin-button {
         </p>
         <div class="form-group row">
             <div class="col-sm">
-                <button type="submit" class="btn btn-primary app-button">Submit</button>
+                <button type="submit" class="btn btn-primary app-button" ">Submit</button>
             </div>
         </div>
     </form>
@@ -79,26 +79,26 @@ input::-webkit-inner-spin-button {
     </div>
 
     </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>
-        function digits() {
+        function digits(event) {
             var d1 = $("#colFormLabelLg1").val();
             var d2 = $("#colFormLabelLg2").val();
             var d3 = $("#colFormLabelLg3").val();
             var d4 = $("#colFormLabelLg4").val();
             var digits = d1 + '' + d2 + '' + d3 + '' + d4;
-
+            console.log(digits)
             fetch(`http://${window.location.hostname}:8002/2fa/id`, {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
-            }, {
+                },
                 body: JSON.stringify({
                     digits: digits
                 })
             });
-        };
+        }
     </script>
 
 </html>

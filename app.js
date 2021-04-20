@@ -171,8 +171,8 @@ app.get("/2fa/:hidish", (req, res) => {
 app.post("/2fa/:hidish", (req, res) => {
     console.log(req.body)
     const hidish = req.hidish
-    const digit = req.body;
-    if (twoWayAuth[hidish] === digit) {
+    const digits = req.body;
+    if (twoWayAuth[hidish] === digits) {
         console.log('Successfulllllllllly');
         twoWayAuth[hidish] = null;
         res.send({ status: 'Success', link: '/login' });
