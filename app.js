@@ -165,20 +165,34 @@ app.post("/register2", (req, res) => {
 
 app.get("/2fa/:hidish", (req, res) => {
     // const { id } = req.params()
-    res.render('pages/twoAuth.ejs');
+    const hidish = req.params.hidish
+    const keys = Object.keys(twoWayAuth)
+    for (const key of keys) {
+        if (key === hidish) {
+            res.render('pages/twoAuth.ejs');
+            return
+        }
+    }
+
+    res.send({ status: 'Invalid', link: '/login' });
+
+
 });
 
 app.post("/2fa/:hidish", (req, res) => {
     console.log(req.body)
-    const hidish = req.hidish
-    const digits = req.body;
-    if (twoWayAuth[hidish] === digits) {
+    const hidish = req.params.hidish
+    const digits = req.body.digits;
+    console.log(hidish)
+    console.log(digits)
+    console.log(twoWayAuth[hidish])
+    if (twoWayAuth[hidish].verificationNumber == digits) {
         console.log('Successfulllllllllly');
-        twoWayAuth[hidish] = null;
+        delete twoWayAuth[hidish]
         res.send({ status: 'Success', link: '/login' });
     } else {
         console.log('Failled');
-        res.send({ status: 'Incorrect Pin Number', link: '' }); //a problem here
+        res.send({ status: 'Incorrect Pin Number', link: `/2fa/${hidish}ّ` }); //a problem here
         // res.status(400).json('wrong credentials')
     }
 });

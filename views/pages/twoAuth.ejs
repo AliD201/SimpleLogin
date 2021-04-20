@@ -74,24 +74,26 @@ input::-webkit-inner-spin-button {
     </main>
 
     <footer>
-        <p class="text-center text-muted">© Copyright 2021 The Awesome People</p>
+        <p class="text-center text-muted ">© Copyright 2021 The Awesome People</p>
     </footer>
     </div>
 
     </body>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
     <script>
         function digits(event) {
-            var d1 = $("#colFormLabelLg1").val();
-            var d2 = $("#colFormLabelLg2").val();
-            var d3 = $("#colFormLabelLg3").val();
-            var d4 = $("#colFormLabelLg4").val();
+            var d1 = $("#colFormLabelLg1 ").val();
+            var d2 = $("#colFormLabelLg2 ").val();
+            var d3 = $("#colFormLabelLg3 ").val();
+            var d4 = $("#colFormLabelLg4 ").val();
             var digits = d1 + '' + d2 + '' + d3 + '' + d4;
-            var link = window.location.href.split("/");
+
+            var link = window.location.href.split('/');
             console.log(digits)
             console.log(link)
+            // this is what you should link for 
             console.log(link[link.length-1])
-            fetch(`http://${window.location.hostname}:8002/2fa/id`, {
+            fetch(`http://${window.location.hostname}:8002/2fa/${link[link.length-1]}`, {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
