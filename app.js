@@ -2,6 +2,7 @@
  * Required External Modules
  */
 const express = require("express");
+var session = require('express-session')
 const path = require("path");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
@@ -34,6 +35,11 @@ var twoWayAuth = {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: "the Greatest Password",
+    resave: false,
+    saveUninitialized: false,
+}))
 // // Parse URL-encoded bodies (as sent by HTML forms)
 // app.use(express.urlencoded());
 
@@ -93,7 +99,9 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
     res.render('pages/login.ejs');
 });
-
+// app.get("/welcome", (req, res) => {
+//     res.render('pages/Welcome-sample.ejs');
+// });
 app.post("/login", (req, res) => {
 
     console.log(req.body)
