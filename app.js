@@ -2,6 +2,7 @@
  * Required External Modules
  */
 const express = require("express");
+var session = require('express-session')
 const path = require("path");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
@@ -34,7 +35,11 @@ var twoWayAuth = {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(session({
+    secret: "the Greatest Password",
+    resave: false,
+    saveUninitialized: false,
+}))
 // // Parse URL-encoded bodies (as sent by HTML forms)
 // app.use(express.urlencoded());
 
@@ -88,16 +93,42 @@ var MyGarbageCollector = setInterval(function() {
 //     res.status(200).send("WHATABYTE: Food For Devs");
 //   });
 
-app.get("/", (req, res) => {
+function isLoggedIn(req, res, next){
+    if (req.session.username){
+        next();
+    }else{
+        return res.redirect('/login')
+    }
+}
+function notLoggedIn(req, res, next){
+    if (!req.session.username){
+        next();
+    }else{
+        return res.redirect('/welcome')
+    }
+}
+function underAuthentication(req, res, next){
+    if (req.session.authentication){
+        next();
+    }else{
+        return res.redirect('/login')
+    }
+}
+
+
+app.get("/",notLoggedIn, (req, res) => {
     res.render('pages/login.ejs');
 });
-app.get("/login", (req, res) => {
+app.get("/login" , notLoggedIn, (req, res) => {
+    console.log(req.session)
+
     res.render('pages/login.ejs');
 });
-// app.get("/welcome", (req, res) => {
-//     res.render('pages/Welcome-sample.ejs');
-// });
-app.post("/login", (req, res) => {
+app.get("/welcome",isLoggedIn, (req, res) => {
+    console.log(req.session.username)
+    res.render('pages/Welcome-sample.ejs', {username: req.session.username});
+});
+app.post("/login", notLoggedIn, (req, res) => {
 
     console.log(req.body)
     const { email, password } = req.body;
@@ -143,6 +174,7 @@ app.post("/login", (req, res) => {
                 //         console.log('Email sent: ' + info.response);
                 //     }
                 // });
+                req.session.authentication = true;
                 res.send({ status: 'success', link: '/2fa/' + idd });
             } else {
                 console.log('Failled');
@@ -152,6 +184,11 @@ app.post("/login", (req, res) => {
         })
         .catch(err => res.status(400).json('Incorrect Username or Password'))
 
+});
+app.get("/logout", isLoggedIn, (req, res) => {
+
+req.session.destroy()
+res.redirect('/login')
 });
 
 
@@ -185,7 +222,7 @@ app.post("/register2", (req, res) => {
     }
 });
 
-app.get("/2fa/test", (req, res) => {
+app.get("/2fa/test", notLoggedIn, (req, res) => {
     var dead = new Date(new Date().getTime() + 1*sec*1000)
      dead = new Date(dead.getTime() -  new Date().getTime())
     // const {id} = req.params()
@@ -198,7 +235,7 @@ app.get("/2fa/test", (req, res) => {
     }});
 });
 
-app.get("/2fa/:hidish", (req, res) => {
+app.get("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
     // const { id } = req.params()
     try {    
         const hidish = req.params.hidish
@@ -220,7 +257,7 @@ app.get("/2fa/:hidish", (req, res) => {
 
 });
 
-app.post("/2fa/:hidish", (req, res) => {
+app.post("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
     console.log(req.body)
     const hidish = req.params.hidish
     const digits = req.body.digits;
@@ -234,7 +271,11 @@ app.post("/2fa/:hidish", (req, res) => {
             knex.select('username', 'email').from('users')
             .where('userid', '=', hidish)
             .then(data => {
-                return res.send({ status: 'success', link: '', username:data[0].username, email:data[0].email});});
+                req.session.username = data[0].username;
+                delete req.session.authentication;
+                console.log(req.session)
+                return res.send({ status: 'success', link: '/welcome'});
+            });
     
             
         } else {
@@ -248,7 +289,7 @@ app.post("/2fa/:hidish", (req, res) => {
     
 });
 // for resend
-app.put("/2fa/:hidish", (req, res) => {
+app.put("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
     const hidish = req.params.hidish
     try{
         var rnd = Math.floor(Math.random() * (10000 - 999)) + 999

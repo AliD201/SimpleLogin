@@ -175,9 +175,10 @@
                 }).then(function(data) {
                 if (data.status === 'success'){
                
-                $('#container').text(``)
-                $('#container').append(`<h1> Welcome, <span style="color: palevioletred;">${data.username} </span> </h1>`)
+                // $('#container').text(``)
+                // $('#container').append(`<h1> Welcome, <span style="color: palevioletred;">${data.username} </span> </h1>`)
                 alert("success")
+                window.location = data.link
                 }else {
                     if ($('#error').length){
                         $('#error').text(data.status)
