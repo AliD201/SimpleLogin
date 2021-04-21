@@ -124,7 +124,7 @@
             console.log(link)
             // this is what you should link for 
             console.log(link[link.length-1])
-            fetch(`http://${window.location.hostname}:8002/2fa/${link[link.length-1]}`, {
+            fetch(`http://${window.location.hostname}`+(window.location.port ? `:${window.location.port}`:'') + `/2fa/${link[link.length-1]}`, {
                 method: 'put',
                 headers: {
                     'Accept': 'application/json',
@@ -161,7 +161,7 @@
             console.log(link)
             // this is what you should link for 
             console.log(link[link.length-1])
-            fetch(`http://${window.location.hostname}:8002/2fa/${link[link.length-1]}`, {
+            fetch(`http://${window.location.hostname}`+(window.location.port ? `:${window.location.port}`:'') + `/2fa/${link[link.length-1]}`, {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
@@ -177,7 +177,7 @@
                
                 // $('#container').text(``)
                 // $('#container').append(`<h1> Welcome, <span style="color: palevioletred;">${data.username} </span> </h1>`)
-                alert("success")
+                // alert("success")
                 window.location = data.link
                 }else {
                     if ($('#error').length){

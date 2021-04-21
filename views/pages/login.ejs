@@ -72,7 +72,7 @@
         var password = $("#password").val();
         var test = window.location.hostname;
         // console.log(`The form was submitted \n ${ email } \n ${ password } \n ${test}`)
-        fetch(`http://${window.location.hostname}:8002/login`, {
+        fetch(`http://${window.location.hostname}`+(window.location.port ? `:${window.location.port}`:'') + `/login`, {
           method: 'post',
           headers: {
       'Accept': 'application/json',
