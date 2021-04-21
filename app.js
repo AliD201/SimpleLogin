@@ -39,6 +39,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
+const min=5
+const sec =60 
 
 /**
  * Mailer settings
@@ -52,6 +54,20 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+var MyGarbageCollector = setInterval(function() {
+    const keys = Object.keys(twoWayAuth)
+    var now  = new Date();
+    var nextnow = new Date(now.getTime()+1*60000)
+    for (const key of keys) {
+        if (twoWayAuth[key].deadline<=now){
+            twoWayAuth[key].verificationNumber = null
+        }
+        if (twoWayAuth[key].deadline<=nextnow){
+            delete twoWayAuth[key]
+        }
+    }
+    console.log(twoWayAuth)
+},30 * 1000); 
 
 
 //!   this is how to send an email 
@@ -97,23 +113,22 @@ app.post("/login", (req, res) => {
             if (hash == data[0].hashedpassword) {
                 console.log('Successfulllllllllly');
                 var rnd = Math.floor(Math.random() * (10000 - 999)) + 999
+                const dead = new Date(new Date().getTime() + min*sec*1000)
                 var tfa = {
                     verificationNumber: rnd,
-                    timestamp: new Date()
+                    deadline: dead
                 }
                 let idd = data[0].userid
                 twoWayAuth[idd] = tfa
                 console.log(twoWayAuth)
-                    // var dead = new Date(tfa['timestamp'] + 5 * 60000)
-                var dead = 'DC'
                 const mailOptions = {
                     from: 'dhahraneshopping.noreply@gmail.com',
                     to: email,
                     subject: 'Authentication code No-Reply',
-                    html: '<h1>Hi ' + data[0].username + ',</h1><br><h1>We need to authenticate you. Submit the following number:<b>' + rnd + '</b> This code will die at' + dead + '</h1>'
+                    html: '<h1>Hi ' + data[0].username + ',</h1><br><h1>We need to authenticate you. Submit the following number:<b>' + rnd + '</b> This code will die at ' + dead + '.</h1>'
                 };
 
-
+                console.log(mailOptions);
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
                         console.log(error);
@@ -168,7 +183,7 @@ app.get("/2fa/:hidish", (req, res) => {
     const hidish = req.params.hidish
     const keys = Object.keys(twoWayAuth)
     for (const key of keys) {
-        if (key === hidish) {
+        if (key === hidish && twoWayAuth[hidish].verificationNumber!= null) {
             res.render('pages/twoAuth.ejs');
             return
         }
@@ -189,7 +204,7 @@ app.post("/2fa/:hidish", (req, res) => {
     if (twoWayAuth[hidish].verificationNumber == digits) {
         console.log('Successfulllllllllly');
         delete twoWayAuth[hidish]
-        res.send({ status: 'Success', link: '/login' });
+        res.send({ status: 'success', link: '/login' });
     } else {
         console.log('Failled');
         res.send({ status: 'Incorrect Pin Number', link: `/2fa/${hidish}ّ` }); //a problem here
@@ -198,9 +213,38 @@ app.post("/2fa/:hidish", (req, res) => {
 });
 // for resend
 app.put("/2fa/:hidish", (req, res) => {
+    const hidish = req.params.hidish
+    try{
+        var rnd = Math.floor(Math.random() * (10000 - 999)) + 999
+        twoWayAuth[hidish].verificationNumber = rnd
+        const dead = twoWayAuth[hidish].deadline
+        knex.select('username', 'email').from('users')
+        .where('userid', '=', hidish)
+        .then(data => {
+                console.log(twoWayAuth)
+                const mailOptions = {
+                    from: 'dhahraneshopping.noreply@gmail.com',
+                    to: data[0].email,
+                    subject: 'Authentication code No-Reply',
+                    html: '<h1>Hi ' + data[0].username + ',</h1><br><h1>We need to authenticate you. Submit the following number:<b>' + rnd + '</b> This code will die at ' + dead + '.</h1>'
+                };
+                console.log(mailOptions);
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });});
+            }
+        catch(err){
+            console.log(err);
 
+        }
 
-});
+        });
+
+    
 
 app.get("/2fa/test", (req, res) => {
     // const {id} = req.params()

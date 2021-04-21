@@ -61,9 +61,9 @@ input::-webkit-inner-spin-button {
         <p>
             If you don’t find the message in your inbox, please check the junk mail inbox.
         </p>
-        <p style="color: red;">
+       <a onclick="resend(event)" ><p style="color: red;">
             Resend Code
-        </p>
+        </p></a> 
         <div class="form-group row">
             <div class="col-sm">
                 <button type="submit" class="btn btn-primary app-button" >Submit</button>
@@ -81,6 +81,35 @@ input::-webkit-inner-spin-button {
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
     <script>
+        function resend(event){
+            var link = window.location.href.split('/');
+            console.log(link)
+            // this is what you should link for 
+            console.log(link[link.length-1])
+            fetch(`http://${window.location.hostname}:8002/2fa/${link[link.length-1]}`, {
+                method: 'put',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: null
+            }).then(function(response) {
+                return ;
+                }).then(function(data) {
+                if (data.status === 'success'){
+                    $('#error').remove()
+                window.location = data.link
+                } else {
+                if ($('#error').length){
+                    $('#error').text(data.status)
+                }else {
+                    $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
+                }
+                }
+                });
+            event.preventDefault();
+        }
+        
         function digits(event) {
             var d1 = $("#colFormLabelLg1 ").val();
             var d2 = $("#colFormLabelLg2 ").val();
