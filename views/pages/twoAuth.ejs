@@ -24,6 +24,13 @@
     a:hover{
         cursor: pointer;
     }
+    .auth {
+    /* border:    3px solid lightgray; */
+    border-width: 3px;
+        border-top: none;
+    border-image: linear-gradient(180deg, rgba(213, 231, 238, 0.397), rgba(37, 2, 51, 0.123)) 1;
+
+    }
     </style>
   </head>
   <body >
@@ -42,21 +49,17 @@
         <div class="form-group row twoAuth">
             <div class="col-sm-12">
                 <div class="row justify-content-around">
-                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg1" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2 auth" id="colFormLabelLg1" style="  background: rgba(0, 0, 0, 0); height: 190px; 
                 outline: none;
-                border-bottom: 2px solid lightgrey; 
                 " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
-                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg2" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2 auth" id="colFormLabelLg2" style="  background: rgba(0, 0, 0, 0); height: 190px; 
                 outline: none;
-                border-bottom: 2px solid lightgrey; 
                 " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
-                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg3" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2 auth" id="colFormLabelLg3" style="  background: rgba(0, 0, 0, 0); height: 190px; 
                 outline: none;
-                border-bottom: 2px solid lightgrey; 
                 " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
-                    <input type="text" class="form-control form-control-lg round-corners col-sm-2" id="colFormLabelLg4" style="  background: rgba(0, 0, 0, 0); height: 190px; border: none;
+                    <input type="text" class="form-control form-control-lg round-corners col-sm-2 auth" id="colFormLabelLg4" style="  background: rgba(0, 0, 0, 0); height: 190px; 
                 outline: none;
-                border-bottom: 2px solid lightgrey; 
                 " minlength="1" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
                 </div>
             </div>
@@ -171,11 +174,7 @@
                 return response.json();
                 }).then(function(data) {
                 if (data.status === 'success'){
-                // var username = ""
-                // if ('<%= username %>'){
-                //     username = '<%= username %>'
-                // }
-                // var username =  typeof   == 'undefined'
+               
                 $('#container').text(``)
                 $('#container').append(`<h1> Welcome, <span style="color: palevioletred;">${data.username} </span> </h1>`)
                 alert("success")
