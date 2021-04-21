@@ -61,9 +61,9 @@ input::-webkit-inner-spin-button {
         <p>
             If you don’t find the message in your inbox, please check the junk mail inbox.
         </p>
-       <a onclick="resend(event)" ><p style="color: red;">
-            Resend Code
-        </p></a> 
+       <p style="color: red;"><a onclick="resend(event)" >
+            Resend Code</a><br><%= deadline %>
+       </p>
         <div class="form-group row">
             <div class="col-sm">
                 <button type="submit" class="btn btn-primary app-button" >Submit</button>
@@ -94,9 +94,10 @@ input::-webkit-inner-spin-button {
                 },
                 body: null
             }).then(function(response) {
-                return ;
+                return response.json();
                 }).then(function(data) {
-                if (data.status === 'success'){
+                    console.log(data)
+                if (data.status === 'Incorrect Pin Number'){
                     $('#error').remove()
                 window.location = data.link
                 } else {

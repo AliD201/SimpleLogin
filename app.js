@@ -125,7 +125,7 @@ app.post("/login", (req, res) => {
                     from: 'dhahraneshopping.noreply@gmail.com',
                     to: email,
                     subject: 'Authentication code No-Reply',
-                    html: '<h1>Hi ' + data[0].username + ',</h1><br><h1>We need to authenticate you. Submit the following number:<b>' + rnd + '</b> This code will die at ' + dead + '.</h1>'
+                    html: '<h3>Hi ' + data[0].username + ', </h3><br><p>We need to authenticate you. Submit the following number:<br><b>' + rnd + '</b><br>This code will die at ' + dead + '.</p>'
                 };
 
                 console.log(mailOptions);
@@ -184,13 +184,12 @@ app.get("/2fa/:hidish", (req, res) => {
     const keys = Object.keys(twoWayAuth)
     for (const key of keys) {
         if (key === hidish && twoWayAuth[hidish].verificationNumber!= null) {
-            res.render('pages/twoAuth.ejs');
+            res.render('pages/twoAuth.ejs',{deadline:twoWayAuth[hidish].deadline});
             return
         }
     }
 
-    res.send({ status: 'Invalid', link: '/login' });
-
+    res.redirect('/login')
 
 });
 
@@ -204,7 +203,11 @@ app.post("/2fa/:hidish", (req, res) => {
     if (twoWayAuth[hidish].verificationNumber == digits) {
         console.log('Successfulllllllllly');
         delete twoWayAuth[hidish]
-        res.send({ status: 'success', link: '/login' });
+        knex.select('username', 'email').from('users')
+        .where('userid', '=', hidish)
+        .then(data => {res.send({ status: 'success', link: '/login', username:data[0].username, email:data[0].email});});
+
+        
     } else {
         console.log('Failled');
         res.send({ status: 'Incorrect Pin Number', link: `/2fa/${hidish}ّ` }); //a problem here
@@ -226,7 +229,7 @@ app.put("/2fa/:hidish", (req, res) => {
                     from: 'dhahraneshopping.noreply@gmail.com',
                     to: data[0].email,
                     subject: 'Authentication code No-Reply',
-                    html: '<h1>Hi ' + data[0].username + ',</h1><br><h1>We need to authenticate you. Submit the following number:<b>' + rnd + '</b> This code will die at ' + dead + '.</h1>'
+                    html: '<h3>Hi ' + data[0].username + ',</h3><br><p>We need to authenticate you. Submit the following number:<br><b>' + rnd + '</b><br>This code will die at ' + dead + '.</p>'
                 };
                 console.log(mailOptions);
                 transporter.sendMail(mailOptions, function(error, info) {
@@ -238,7 +241,8 @@ app.put("/2fa/:hidish", (req, res) => {
                 });});
             }
         catch(err){
-            console.log(err);
+            // console.log(err);
+            res.send({ status: 'Incorrect Pin Number', link: `/login` }); //a problem here
 
         }
 
