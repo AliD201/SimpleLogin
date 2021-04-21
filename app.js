@@ -10,7 +10,7 @@ const knex = require('knex')({
     connection: {
         host: '127.0.0.1',
         user: 'postgres',
-        password: 'SWE545',
+        password: '12345',
         database: 'DhahranEShopping'
     }
 });
@@ -108,6 +108,10 @@ app.post("/login", (req, res) => {
         .then(data => {
             console.log('Successfulllllllllly');
             console.log(hash)
+            if (data.length === 0){
+                return res.send({ status: 'Incorrect Username or Password', link: '/login' }); //a problem here 
+            }
+
             console.log(data[0].hashedpassword)
 
             if (hash == data[0].hashedpassword) {
@@ -129,13 +133,13 @@ app.post("/login", (req, res) => {
                 };
 
                 console.log(mailOptions);
-                transporter.sendMail(mailOptions, function(error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                    }
-                });
+                // transporter.sendMail(mailOptions, function(error, info) {
+                //     if (error) {
+                //         console.log(error);
+                //     } else {
+                //         console.log('Email sent: ' + info.response);
+                //     }
+                // });
                 res.send({ status: 'success', link: '/2fa/' + idd });
             } else {
                 console.log('Failled');
@@ -178,18 +182,38 @@ app.post("/register2", (req, res) => {
     }
 });
 
+app.get("/2fa/test", (req, res) => {
+    var dead = new Date(new Date().getTime() + 1*sec*1000)
+     dead = new Date(dead.getTime() -  new Date().getTime())
+    // const {id} = req.params()
+    console.log(dead)
+    console.log(dead.getMinutes())
+    console.log(dead.getSeconds())
+    res.render('pages/twoAuth.ejs', {deadline:{
+        min: dead.getMinutes(),
+        sec: dead.getSeconds()
+    }});
+});
+
 app.get("/2fa/:hidish", (req, res) => {
     // const { id } = req.params()
-    const hidish = req.params.hidish
-    const keys = Object.keys(twoWayAuth)
-    for (const key of keys) {
-        if (key === hidish && twoWayAuth[hidish].verificationNumber!= null) {
-            res.render('pages/twoAuth.ejs',{deadline:twoWayAuth[hidish].deadline});
-            return
+    try {    
+        const hidish = req.params.hidish
+        const keys = Object.keys(twoWayAuth)
+        var deadline = new Date (twoWayAuth[hidish].deadline -  new Date().getTime());
+        for (const key of keys) {
+            if (key === hidish && twoWayAuth[hidish].verificationNumber!= null) {
+                return res.render('pages/twoAuth.ejs',{deadline:{
+                    min: deadline.getMinutes(),
+                    sec: deadline.getSeconds()
+                }, username:""});
+                
+            }
         }
+    } catch (error) {
+        res.redirect('/login')       
     }
-
-    res.redirect('/login')
+ 
 
 });
 
@@ -200,19 +224,25 @@ app.post("/2fa/:hidish", (req, res) => {
     console.log(hidish)
     console.log(digits)
     console.log(twoWayAuth[hidish])
-    if (twoWayAuth[hidish].verificationNumber == digits) {
-        console.log('Successfulllllllllly');
-        delete twoWayAuth[hidish]
-        knex.select('username', 'email').from('users')
-        .where('userid', '=', hidish)
-        .then(data => {res.send({ status: 'success', link: '/login', username:data[0].username, email:data[0].email});});
-
-        
-    } else {
-        console.log('Failled');
-        res.send({ status: 'Incorrect Pin Number', link: `/2fa/${hidish}ّ` }); //a problem here
-        // res.status(400).json('wrong credentials')
+    try {
+        if (twoWayAuth[hidish].verificationNumber == digits) {
+            console.log('Successfulllllllllly');
+            delete twoWayAuth[hidish]
+            knex.select('username', 'email').from('users')
+            .where('userid', '=', hidish)
+            .then(data => {
+                return res.send({ status: 'success', link: '', username:data[0].username, email:data[0].email});});
+    
+            
+        } else {
+            console.log('Failled');
+            return res.send({ status: 'Incorrect Pin Number', link: `/2fa/${hidish}ّ` }); //a problem here
+            // res.status(400).json('wrong credentials')
+        }
+    } catch (error) {
+        return res.send({ status: 'success', link: '/login'})
     }
+    
 });
 // for resend
 app.put("/2fa/:hidish", (req, res) => {
@@ -232,13 +262,14 @@ app.put("/2fa/:hidish", (req, res) => {
                     html: '<h3>Hi ' + data[0].username + ',</h3><br><p>We need to authenticate you. Submit the following number:<br><b>' + rnd + '</b><br>This code will die at ' + dead + '.</p>'
                 };
                 console.log(mailOptions);
-                transporter.sendMail(mailOptions, function(error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                    }
-                });});
+                // transporter.sendMail(mailOptions, function(error, info) {
+                //     if (error) {
+                //         console.log(error);
+                //     } else {
+                //         console.log('Email sent: ' + info.response);
+                //     }
+                // });
+            });
             }
         catch(err){
             // console.log(err);
@@ -250,10 +281,6 @@ app.put("/2fa/:hidish", (req, res) => {
 
     
 
-app.get("/2fa/test", (req, res) => {
-    // const {id} = req.params()
-    res.render('pages/twoAuth.ejs');
-});
 
 /**
  * Server Activation

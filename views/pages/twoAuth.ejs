@@ -15,12 +15,15 @@
       }
       input[type='number'] {
     -moz-appearance:textfield;
-}
+    }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    a:hover{
+        cursor: pointer;
+    }
     </style>
   </head>
   <body >
@@ -32,7 +35,7 @@ input::-webkit-inner-spin-button {
     </header>
 
     <main>
-      <div class="jumbotron text-center ">
+      <div class="jumbotron text-center " id="container">
         <h1 class="mb-4 login " id="twoAuthHeader">A 4 digit verification code has been sent to your Email </h1>
     <!-- <p style="color: red;">Invalid Medlon</p> -->
     <form onsubmit="digits(event)">
@@ -61,9 +64,15 @@ input::-webkit-inner-spin-button {
         <p>
             If you don’t find the message in your inbox, please check the junk mail inbox.
         </p>
-       <p style="color: red;"><a onclick="resend(event)" >
-            Resend Code</a><br><%= deadline %>
-       </p>
+       <a onclick="resend(event)" style="color: red; text-decoration: underline;
+       ">
+            Resend Code
+        </a>
+            <br>
+            <timer id="timer">
+
+            </timer>
+       </a>
         <div class="form-group row">
             <div class="col-sm">
                 <button type="submit" class="btn btn-primary app-button" >Submit</button>
@@ -81,6 +90,32 @@ input::-webkit-inner-spin-button {
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
     <script>
+        var timeleftM = '<%= deadline.min %>';
+        var timeleftS = '<%= deadline.sec %>';
+        console.log(timeleftM, timeleftS)
+        var timer = setInterval(function(){
+        if(timeleftM <= 0 && timeleftS <= 0){
+            console.log("innnnnnn")
+            setTimeout(() => {
+                alert("Your code session timedout, please log in again")
+                 $("#timer").text(`Please Re-login`);
+                window.location = '/login'
+                }, 1000);
+            clearInterval(timer);
+        }
+        if (timeleftS <= 0 && timeleftM > 0){
+            timeleftM -= 1;
+            timeleftS = 60;
+        }
+        timeleftS -= 1;
+        if ( timeleftS < 10){
+            timeleftS = "0"+timeleftS
+        }
+        $("#timer").text(`${timeleftM} : ${timeleftS}`)
+        // document.getElementById("progressBar").value = 10 - timeleft;
+        // timeleft -= 1;
+        }, 1000);
+
         function resend(event){
             var link = window.location.href.split('/');
             console.log(link)
@@ -96,8 +131,8 @@ input::-webkit-inner-spin-button {
             }).then(function(response) {
                 return response.json();
                 }).then(function(data) {
-                    console.log(data)
-                if (data.status === 'Incorrect Pin Number'){
+                    // console.log(data)
+               if (data.status === 'Incorrect Pin Number'){
                     $('#error').remove()
                 window.location = data.link
                 } else {
@@ -136,14 +171,20 @@ input::-webkit-inner-spin-button {
                 return response.json();
                 }).then(function(data) {
                 if (data.status === 'success'){
-                    $('#error').remove()
-                window.location = data.link
-                } else {
-                if ($('#error').length){
-                    $('#error').text(data.status)
+                // var username = ""
+                // if ('<%= username %>'){
+                //     username = '<%= username %>'
+                // }
+                // var username =  typeof   == 'undefined'
+                $('#container').text(``)
+                $('#container').append(`<h1> Welcome, <span style="color: palevioletred;">${data.username} </span> </h1>`)
+                alert("success")
                 }else {
-                    $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
-                }
+                    if ($('#error').length){
+                        $('#error').text(data.status)
+                    }else {
+                        $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
+                    }
                 }
                 });
             event.preventDefault();
