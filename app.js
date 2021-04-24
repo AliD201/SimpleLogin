@@ -11,7 +11,7 @@ const knex = require('knex')({
     connection: {
         host: '127.0.0.1',
         user: 'postgres',
-        password: 'SWE545',
+        password: '12345',
         database: 'DhahranEShopping'
     }
 });
@@ -321,12 +321,11 @@ app.put("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
         return res.status(400).json('incorrect form submission');
     }
 
-let x = Number(hidish)
-console.log(x,"my numbers sditwjpitef")
-if(isNaN(x)){
-    return res.status(400).json('incorrect id Entered');
-
-}
+    let x = Number(hidish)
+    console.log(x,"my numbers sditwjpitef")
+    if(isNaN(x)){
+        return res.status(400).json('incorrect id Entered');
+    }
 
     try{
         
@@ -349,7 +348,8 @@ if(isNaN(x)){
                         console.log(error);
                     } else {
                         console.log('Email sent: ' + info.response);
-                        return res.status(200)
+                        return res.status(200).json("ok")
+
                     }
                 });
             });
