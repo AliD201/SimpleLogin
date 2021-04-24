@@ -11,7 +11,7 @@ const knex = require('knex')({
     connection: {
         host: '127.0.0.1',
         user: 'postgres',
-        password: '12345',
+        password: 'SWE545',
         database: 'DhahranEShopping'
     }
 });
@@ -93,6 +93,8 @@ var MyGarbageCollector = setInterval(function() {
 //     res.status(200).send("WHATABYTE: Food For Devs");
 //   });
 
+
+
 function isLoggedIn(req, res, next){
     if (req.session.username){
         next();
@@ -135,6 +137,14 @@ app.post("/login", notLoggedIn, (req, res) => {
     if (!email || !password) {
         return res.status(400).json('incorrect form submission');
     }
+
+    let emailpattern = /^[\w-_\.]+@([\w-_]+\.)+[\w-_]*$/;
+
+    ;
+    if (!emailpattern.test(email)) {
+        return res.status(400).json('incorrect email Entered');
+    }
+
     var hash = crypto.createHash('sha256').update(password).digest('hex');
     console.log(hash)
     knex.select('userid', 'username', 'email', 'hashedpassword').from('users')
@@ -264,6 +274,21 @@ app.post("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
     console.log(hidish)
     console.log(digits)
     console.log(twoWayAuth[hidish])
+    
+    if (!hidish || !digits) {
+        return res.status(400).json('incorrect form submission');
+    }
+
+    let x = Number(hidish)
+    console.log(x,"my numbers sditwjpitef")
+    if(isNaN(x)){
+        return res.status(400).json('incorrect id Entered');
+
+    }
+        
+    
+
+
     try {
         if (twoWayAuth[hidish].verificationNumber == digits) {
             console.log('Successfulllllllllly');
@@ -291,7 +316,20 @@ app.post("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
 // for resend
 app.put("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
     const hidish = req.params.hidish
+
+    if (!hidish) {
+        return res.status(400).json('incorrect form submission');
+    }
+
+let x = Number(hidish)
+console.log(x,"my numbers sditwjpitef")
+if(isNaN(x)){
+    return res.status(400).json('incorrect id Entered');
+
+}
+
     try{
+        
         var rnd = Math.floor(Math.random() * (10000 - 999)) + 999
         twoWayAuth[hidish].verificationNumber = rnd
         const dead = twoWayAuth[hidish].deadline
@@ -311,6 +349,7 @@ app.put("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
                         console.log(error);
                     } else {
                         console.log('Email sent: ' + info.response);
+                        return res.status(200)
                     }
                 });
             });
