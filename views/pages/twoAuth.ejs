@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>EJS Is Fun</title>
+    <title>Dhahran E-shopping</title>
+
+    <link rel="icon" href="/images/shopping-cart.png">
 
     <!-- CSS (load bootstrap from a CDN) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -88,10 +90,34 @@
     <footer>
         <p class="text-center text-muted ">© Copyright 2021 The Awesome People</p>
     </footer>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" >
+          <!-- <h5 class="modal-title" id="exampleModalLongTitle">Code Resent</h5> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          Code Resent to your email.
+        </div>
+        <div class="modal-footer justify-content-center" >
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     </div>
 
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
     <script>
         var timeleftM = '<%= deadline.min %>';
         var timeleftS = '<%= deadline.sec %>';
@@ -104,7 +130,7 @@
                  $("#timer").text(`Please Re-login`);
                 window.location = '/login'
                 }, 1000);
-            clearInterval(timer);
+          return  clearInterval(timer);
         }
         if (timeleftS <= 0 && timeleftM > 0){
             timeleftM -= 1;
@@ -120,6 +146,7 @@
         }, 1000);
 
         function resend(event){
+            $('#exampleModalCenter').modal('show')
             var link = window.location.href.split('/');
             console.log(link)
             // this is what you should link for 
@@ -135,15 +162,15 @@
                 return response.json();
                 }).then(function(data) {
                     // console.log(data)
-               if (data.status === 'Incorrect Pin Number'){
-                    $('#error').remove()
+               if (data.status === 'Code Timed Out'){
+                $('#error').remove()
                 window.location = data.link
                 } else {
-                if ($('#error').length){
-                    $('#error').text(data.status)
-                }else {
-                    $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
-                }
+                    if ($('#error').length){
+                        $('#error').text(data.status)
+                    }else {
+                        $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
+                    }
                 }
                 });
             event.preventDefault();

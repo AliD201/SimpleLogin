@@ -167,13 +167,13 @@ app.post("/login", notLoggedIn, (req, res) => {
                 };
 
                 console.log(mailOptions);
-                // transporter.sendMail(mailOptions, function(error, info) {
-                //     if (error) {
-                //         console.log(error);
-                //     } else {
-                //         console.log('Email sent: ' + info.response);
-                //     }
-                // });
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
                 req.session.authentication = true;
                 res.send({ status: 'success', link: '/2fa/' + idd });
             } else {
@@ -306,18 +306,18 @@ app.put("/2fa/:hidish", notLoggedIn, underAuthentication, (req, res) => {
                     html: '<h3>Hi ' + data[0].username + ',</h3><br><p>We need to authenticate you. Submit the following number:<br><b>' + rnd + '</b><br>This code will die at ' + dead + '.</p>'
                 };
                 console.log(mailOptions);
-                // transporter.sendMail(mailOptions, function(error, info) {
-                //     if (error) {
-                //         console.log(error);
-                //     } else {
-                //         console.log('Email sent: ' + info.response);
-                //     }
-                // });
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
             });
             }
         catch(err){
             // console.log(err);
-            res.send({ status: 'Incorrect Pin Number', link: `/login` }); //a problem here
+            res.send({ status: 'Code Timed Out', link: `/login` }); //a problem here
 
         }
 
