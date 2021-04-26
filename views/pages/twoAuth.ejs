@@ -167,11 +167,13 @@
                 $('#error').remove()
                 window.location = data.link
                 } else {
-                    if ($('#error').length){
-                        $('#error').text(data.status)
-                    }else {
-                        $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
-                    }
+                    if (data.status){
+                        if ($('#error').length){
+                            $('#error').text(data.status)
+                        }else {
+                            $(`<p id="error" style="color: red;">${data.status}</p>`).insertAfter('#twoAuthHeader')
+                        }
+                }
                 }
                 });
             event.preventDefault();

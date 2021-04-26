@@ -29,9 +29,9 @@ var twoWayAuth = {
 
 
     }
-    /**
-     *  App Configuration
-     */
+/**
+ *  App Configuration
+ */
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -45,7 +45,7 @@ app.use(session({
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
-const min=5
+const min=1
 const sec =60 
 
 /**
